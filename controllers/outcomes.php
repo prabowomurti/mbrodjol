@@ -1,7 +1,13 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+class Outcomes extends Controller {
+	function Outcomes() {
+		parent::Controller() ;
+		$this->load->helper('url', 'form');
 
+	}
+
+	function index() {
+		echo "outcomes";
+	}
+}
 ?>

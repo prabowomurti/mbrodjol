@@ -67,54 +67,43 @@ ORDER BY date
 	}
 
 	function payment() {
-		$submenu = $this->uri->segment(3);
-		
-		switch ($submenu) {
-			case "add":
-				$this->payment_add();
-				break;
-
-			case "edit" :
-				;
-				break;
-
-			case "delete" :
-				break;
-
-			default:
-				$query_get_accounts = $this->db->query("
+		$query_get_accounts = $this->db->query("
 SELECT account_id, nickname, amount, time, account_note
 FROM accounts NATURAL JOIN players
 ORDER BY time
-				");
-				foreach ($query_get_accounts->result() as $row){
-					$data['accounts'][] = $row->account_id;
-					$data['account_nickname'][] = $row->nickname;
-					$data['account_amount'][] = $row->amount;
-					$data['account_time'][] = $row->time;
-					$data['account_note'][] = $row->account_note;
-				}
-				break;
+		");
+		foreach ($query_get_accounts->result() as $row){
+			$data['accounts'][] = $row->account_id;
+			$data['account_nickname'][] = $row->nickname;
+			$data['account_amount'][] = $row->amount;
+			$data['account_time'][] = $row->time;
+			$data['account_note'][] = $row->account_note;
 		}
-
+		
 		$this->load->view('accounts_view', isset($data)?$data: array());
 		
 	}
 
-	private function payment_add() {
-		echo ".";
+	function add() {
+		$this->load->view('accounts_add_view');
 	}
 
-	private function payment_delete() {
+	function delete() {
 		print_r($_POST);
 	}
 
-	function income() {
-		$this->load->view('accounts_view', isset($data)?$data: array());
+	function edit() {
+		if ($this->uri->segment(3) == '')
+			redirect("accounts");
+		$data["account_id"] = $this->uri->segment(3);
+		
+		
+		$this->load->view('accounts_add_view', $data);
+		
 	}
 
-	function outcome() {
-		$this->load->view('accounts_view', isset($data)?$data: array());
+	function do_save() {
+		
 	}
 }
 ?>

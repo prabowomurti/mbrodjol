@@ -24,7 +24,7 @@ h1 {
 
 .menu a {
 	 font-family:"Lucida Grande", Verdana, Sans-serif;
-	 font-size: 12px;
+	 font-size: 10px;
 	 background-color: #efefef;
 	 border: 1px solid #D0D0D0;
 	 color: #002166;
@@ -64,15 +64,18 @@ if ($this->db->query('SHOW TABLES')->num_rows() < 10) {?>
 	<code class="menu"><?=anchor("welcome/install", "Install Application");?></code>
 <?php }else {?>
 	<code class="menu"><?=anchor("games", "Manage Games");?></code>
+		<code class="menu child"><?=anchor("games/add", "Add New Game");?></code>
 	<code class="menu"><?=anchor("matches", "Manage Matches");?></code>
 	<code class="menu"><?=anchor("players", "Manage Players");?></code>
+		<code class="menu child"><?=anchor("players/add", "Add New Player");?></code>
 	<code class="menu"><?=anchor("scorers", "View Top Scorers");?></code>
 	<code class="menu"><?=anchor("places", "Manage Places/Stadium");?></code>
+		<code class="menu child"><?=anchor("places/add", "Add New Place");?></code>
 	<code class="menu"><?=anchor("accounts", "Balance");?></code>
 		<code class="menu child"><?=anchor("accounts/history", "View Details");?></code>
 		<code class="menu child"><?=anchor("accounts/add", "Player Pays");?></code>
-		<code class="menu child"><?=anchor("incomes", "Add Income");?></code>
-		<code class="menu child"><?=anchor("outcomes", "Spent Money");?></code>
+	<code class="menu"><?=anchor("incomes", "Manage Incomes");?></code>
+	<code class="menu"><?=anchor("outcomes", "Manage Outcomes");?></code>
 	<code class="menu"><?=anchor("welcome/uninstall", '<span style="color:red">Uninstall</span>', array('onclick'=>"
 						if ( confirm('Are you sure to unsintall this application ?') ) { return true;}return false;"));?></code>
 <?php }//end of if ?>

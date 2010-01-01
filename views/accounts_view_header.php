@@ -6,6 +6,5 @@
 	<body>
 	<?=anchor("", "Home")?> |
 	<?=anchor("accounts", "Resume")?> |
-	<?=anchor('accounts/history', "View Details")?> | <?=anchor("accounts/payment", "Payments")?> |
-	<?=anchor("accounts/income", "Incomes")?> |
-	<?=anchor("accounts/outcome", "Outcomes")?><br />
+	<?=anchor('accounts/history', "View Details")?> | <?=anchor("accounts/payment", "All Payments")?> |
+	<?=anchor("accounts/add", "Player Pays")?><br />

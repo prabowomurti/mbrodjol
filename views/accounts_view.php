@@ -38,8 +38,8 @@
 				$this->table->set_heading(array('Edit', 'Delete', 'Time', 'From', 'Amount', 'Note'));
 				foreach ($accounts as $key=>$account_id){
 					$this->table->add_row(
-						anchor("accounts/payment/edit/".$account_id, "Edit"),
-						anchor("accounts/payment/delete/".$account_id, "Delete", array('onclick'=>"
+						anchor("accounts/edit/".$account_id, "Edit"),
+						anchor("accounts/delete/".$account_id, "Delete", array('onclick'=>"
 							if ( confirm('Are you sure to delete this account ?') ) { return true;}return false;")),
 						$account_time[$key],
 						$account_nickname[$key],
@@ -50,14 +50,6 @@
 
 				echo $this->table->generate();
 			}
-			break;
-
-		case "income" :
-			echo "income goes here";
-			break;
-
-		case "outcome" :
-			echo "outcome goes here";
 			break;
 
 		default://shows the balance by default
