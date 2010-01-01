@@ -1,24 +1,55 @@
 <?php $this->load->view('accounts_view_header');?>
 	<?php
 	$submenu = $this->uri->segment(2);
+	$table_template = array (
+					'table_open'  => '<table class="widefat" border="1px" margin="1px">',
+					'table_close' => '</table>',
+					'heading_row_start' => '<thead>',
+					'heading_row_end' => '</thead>'
+				);
+	$this->table->set_template($table_template);
+
 	switch ($submenu) {
 		case "history":
-			$table_template = array (
-				'table_open'  => '<table class="widefat" border="1px" margin="1px">',
-				'table_close' => '</table>',
-				'heading_row_start' => '<thead>',
-				'heading_row_end' => '</thead>'
-			);
-			$this->table->set_heading(array('Date', 'From/To', 'Amount'));
-			$this->table->set_template($table_template);
-			foreach ($transactions as $key->$value){
-				
-			}
+//			print_r($transactions);
+//			exit();
+			if (!isset($transactions_date)){
+				echo "Tables are empty";
+			}else {
+				$this->table->set_heading(array('Date', 'From/To', 'Amount'));
+							
+				foreach ($transactions_date as $key=>$value){
+					$this->table->add_row(
+						$value,
+						$transactions_what[$key],
+						$transactions_amount[$key]
+					);
+				}
 
+				echo $this->table->generate();
+			}
+			
 			break;
 
 		case "payment" :
-			echo "payment goes here";
+			if (!isset($accounts)){
+				echo "Table accounts is empty";
+			}else {
+				$this->table->set_heading(array('Edit', 'Delete', 'Time', 'From', 'Amount', 'Note'));
+				foreach ($accounts as $key=>$account_id){
+					$this->table->add_row(
+						anchor("accounts/payment/edit/".$account_id, "Edit"),
+						anchor("accounts/payment/delete/".$account_id, "Delete", array('onclick'=>"
+							if ( confirm('Are you sure to delete this account ?') ) { return true;}return false;")),
+						$account_time[$key],
+						$account_nickname[$key],
+						$account_amount[$key],
+						$account_note[$key]
+					);
+				}
+
+				echo $this->table->generate();
+			}
 			break;
 
 		case "income" :

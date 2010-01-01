@@ -21,9 +21,7 @@ CREATE TABLE IF NOT EXISTS `attendances` (
   `player_id` int(11) NOT NULL,
   `game_id` int(11) NOT NULL,
   PRIMARY KEY (`player_id`,`game_id`),
-  KEY `FK_attendances` (`game_id`),
-  CONSTRAINT `FK_attendances` FOREIGN KEY (`game_id`) REFERENCES `games` (`game_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_attendances_players` FOREIGN KEY (`player_id`) REFERENCES `players` (`player_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_attendances` (`game_id`)
 )
 ");
 		//ACCOUNTS

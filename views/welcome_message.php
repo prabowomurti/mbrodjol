@@ -70,9 +70,9 @@ if ($this->db->query('SHOW TABLES')->num_rows() < 10) {?>
 	<code class="menu"><?=anchor("places", "Manage Places/Stadium");?></code>
 	<code class="menu"><?=anchor("accounts", "Balance");?></code>
 		<code class="menu child"><?=anchor("accounts/history", "View Details");?></code>
-		<code class="menu child"><?=anchor("accounts/payment", "Player Pays");?></code>
-		<code class="menu child"><?=anchor("accounts/income", "Add Income");?></code>
-		<code class="menu child"><?=anchor("accounts/outcome", "Spent Money");?></code>
+		<code class="menu child"><?=anchor("accounts/add", "Player Pays");?></code>
+		<code class="menu child"><?=anchor("incomes", "Add Income");?></code>
+		<code class="menu child"><?=anchor("outcomes", "Spent Money");?></code>
 	<code class="menu"><?=anchor("welcome/uninstall", '<span style="color:red">Uninstall</span>', array('onclick'=>"
 						if ( confirm('Are you sure to unsintall this application ?') ) { return true;}return false;"));?></code>
 <?php }//end of if ?>

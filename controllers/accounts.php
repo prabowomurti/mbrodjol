@@ -32,40 +32,81 @@ FROM outcomes;")->row()->balance;
 		 * have the same data type, that is bigint(20) unsigned
 		 */
 		$query_get_all_transactions = $this->db->query("
-SELECT
-	SUBSTRING(time, 1, 10) AS `date`,
-	CONCAT('From ', nickname, accounts.account_note) AS what,
-	accounts.amount AS amount
-FROM accounts NATURAL JOIN players
+SELECT * FROM (
+	SELECT
+		SUBSTRING(time, 1, 10) AS `date`,
+		CONCAT('From ', nickname, ', ',accounts.account_note) AS what,
+		accounts.amount AS amount
+	FROM accounts NATURAL JOIN players
 
-UNION
+	UNION
 
-SELECT
-	income_date AS `date`,
-	source AS what,
-	income_amount AS amount
-FROM incomes
+	SELECT
+		income_date AS `date`,
+		source AS what,
+		income_amount AS amount
+	FROM incomes
 
-UNION
+	UNION
 
-SELECT
-	outcome_date AS `date`,
-	spent_for AS what,
-	outcome_amount AS amount
-FROM outcomes;
+	SELECT
+		outcome_date AS `date`,
+		spent_for AS what,
+		outcome_amount AS amount
+	FROM outcomes
+) AS transactions
+ORDER BY date
 ");
 		foreach ($query_get_all_transactions->result() as $row){
-			$data["transactions"]["date"] = $row->date;
-			$data["transactions"]["what"] = $row->what;
-			$data["transactions"]["amount"] = $row->amount;
+			$data["transactions_date"][] = $row->date;
+			$data["transactions_what"][] = $row->what;
+			$data["transactions_amount"][] = $row->amount;
 		}
 
 		$this->load->view('accounts_view', $data);
 	}
 
 	function payment() {
+		$submenu = $this->uri->segment(3);
+		
+		switch ($submenu) {
+			case "add":
+				$this->payment_add();
+				break;
+
+			case "edit" :
+				;
+				break;
+
+			case "delete" :
+				break;
+
+			default:
+				$query_get_accounts = $this->db->query("
+SELECT account_id, nickname, amount, time, account_note
+FROM accounts NATURAL JOIN players
+ORDER BY time
+				");
+				foreach ($query_get_accounts->result() as $row){
+					$data['accounts'][] = $row->account_id;
+					$data['account_nickname'][] = $row->nickname;
+					$data['account_amount'][] = $row->amount;
+					$data['account_time'][] = $row->time;
+					$data['account_note'][] = $row->account_note;
+				}
+				break;
+		}
 
 		$this->load->view('accounts_view', isset($data)?$data: array());
+		
+	}
+
+	private function payment_add() {
+		echo ".";
+	}
+
+	private function payment_delete() {
+		print_r($_POST);
 	}
 
 	function income() {
