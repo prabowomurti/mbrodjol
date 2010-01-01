@@ -58,5 +58,6 @@
 			break;
 	}
 	?>
+<br /><span style="font-size:7px">Rendered in {elapsed_time} s</span>
 	</body>
 </html>

@@ -11,7 +11,7 @@
 		<?=form_open("accounts/do_save")?>
 		<?=form_hidden("account_id", isset($account_id)?$account_id:"")?>
 			<p>Player Name <?=form_dropdown('player_id', $players, isset($player_id)?$player_id:'')?></p>
-			<p>Amount <?=form_input("amount", isset($amount)?$amount:"")?></p>
+			<p>Amount (in $) <?=form_input("amount", isset($amount)?$amount:"")?></p>
 			<p>Time <?=form_input("time", isset($time)?$time:date("Y-m-d 16:30:00"))?></p>
 			<p>Note <?=form_textarea(array('name'=>'account_note', 'value'=>isset($account_note)?$account_note:'', 'rows'=>4, 'cols'=>50))?></p>
 			<?php if ($this->uri->segment(2)=="edit"):?>
