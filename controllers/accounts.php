@@ -85,25 +85,69 @@ ORDER BY time
 	}
 
 	function add() {
-		$this->load->view('accounts_add_view');
+		$query_get_players = $this->db->query("
+SELECT player_id, nickname
+FROM players
+ORDER BY nickname
+		");
+		//if there is no player yet, force user to add some
+		if ($query_get_players->num_rows() == 0)
+			redirect ("players/add/noplayer");
+		foreach ($query_get_players->result() as $row){
+			$data["players"][$row->player_id] = $row->nickname;
+		}
+		
+		$this->load->view('accounts_add_view', $data);
 	}
 
 	function delete() {
-		print_r($_POST);
+		$this->db->query("
+DELETE FROM accounts
+WHERE account_id = ".$this->uri->segment(3)
+		);
+		redirect ("accounts/payment");
 	}
 
 	function edit() {
 		if ($this->uri->segment(3) == '')
 			redirect("accounts");
-		$data["account_id"] = $this->uri->segment(3);
-		
-		
+
+		$query_get_account = $this->db->query("
+SELECT *
+FROM accounts
+WHERE account_id = ".$this->uri->segment(3)
+		);
+		$data = $query_get_account->row_array();
+
+		$query_get_players = $this->db->query("
+SELECT player_id, nickname
+FROM players
+ORDER BY nickname
+		");
+
+		foreach ($query_get_players->result() as $row){
+			$data["players"][$row->player_id] = $row->nickname;
+		}
+
 		$this->load->view('accounts_add_view', $data);
 		
 	}
 
 	function do_save() {
-		
+		extract($_POST);
+
+		if (!isset($save)){
+			$this->db->insert("accounts", $_POST);
+			redirect("accounts/add/success");
+		}elseif ($save == "Update"){
+			$this->db->query("
+UPDATE accounts
+SET player_id = '$player_id', amount = '$amount', time = '$time', account_note = '$account_note'
+WHERE account_id = $account_id
+");
+			redirect("accounts/edit/".$account_id);
+
+		}
 	}
 }
 ?>

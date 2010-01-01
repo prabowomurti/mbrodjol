@@ -120,10 +120,11 @@ VALUES (
 '$game_id', '$time', '$game_note','$place_id')
 ");
 		$players = isset($players)?$players:array();
+		$last_insert_game_id = $this->db->insert_id();
 		foreach ($players as $player_id){
 			$this->db->query("
 INSERT INTO attendances
-VALUES ($player_id, ". $this->db->insert_id().")
+VALUES ($player_id, ". $last_insert_game_id.")
 ");
 		}
 

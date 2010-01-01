@@ -21,8 +21,7 @@
 			foreach ($players as $key=>$player_id){
 				$this->table->add_row(
 					anchor("players/edit/".$player_id, "Edit"),
-					anchor("players/delete/".$player_id, "Delete", array('onclick'=>"
-						if ( confirm('Are you sure to delete player \'$fullnames[$key]\' ?') ) { return true;}return false;")),
+					anchor("players/delete/".$player_id, "Delete", array('onclick'=>"if ( confirm('Are you sure to delete player \'$fullnames[$key]\' ?') ) { return true;}return false;")),
 					$fullnames[$key],
 					$nicknames[$key],
 					$birthdays[$key]
@@ -30,7 +29,7 @@
 			}
 			echo $this->table->generate();
 		}
-		
+
 		?>
 
 	</body>
