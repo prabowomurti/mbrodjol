@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `games` (
 CREATE TABLE IF NOT EXISTS `incomes` (
   `income_id` int(11) NOT NULL AUTO_INCREMENT,
   `source` varchar(200) DEFAULT NULL,
-  `income_amount` int(11) unsigned DEFAULT NULL,
+  `income_amount` bigint(20) unsigned DEFAULT NULL,
   `income_date` date DEFAULT NULL,
   PRIMARY KEY (`income_id`)
 ) 
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `opponents` (
 		$this->db->query("
 CREATE TABLE IF NOT EXISTS outcomes (
   `outcome_id` int(11) NOT NULL AUTO_INCREMENT,
-  `source` varchar(200) DEFAULT NULL,
-  `outcome_amount` int(10) unsigned DEFAULT NULL,
+  `spent_for` varchar(200) DEFAULT NULL,
+  `outcome_amount` bigint(20) unsigned DEFAULT NULL,
   `outcome_date` date DEFAULT '2009-12-01',
   PRIMARY KEY (`outcome_id`)
 )");

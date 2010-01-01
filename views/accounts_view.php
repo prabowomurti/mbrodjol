@@ -1,36 +1,39 @@
-<html>
-	<head>
-		<title>Accounts Balance</title>
-		<style type="text/css"><?php $this->load->view("styles/general-style.css")?></style>
-	</head>
-	<body>
-	<?=anchor("", "Home")?> | <?=anchor("accounts/add", "New Payment")?><br />
+<?php $this->load->view('accounts_view_header');?>
 	<?php
-	if (isset($account_id)){
-
-		$table_template = array (
+	$submenu = $this->uri->segment(2);
+	switch ($submenu) {
+		case "history":
+			$table_template = array (
 				'table_open'  => '<table class="widefat" border="1px" margin="1px">',
 				'table_close' => '</table>',
 				'heading_row_start' => '<thead>',
-				'heading_row_end' => '</thead>',
-
+				'heading_row_end' => '</thead>'
 			);
-			$this->table->set_heading(array('Edit', 'Delete', 'When', 'At', 'Attendances'));
+			$this->table->set_heading(array('Date', 'From/To', 'Amount'));
 			$this->table->set_template($table_template);
-
-			foreach ($account_id as $key=>$acc_id){
-				$this->table->add_row(
-					anchor("games/edit/".$acc_id, "Edit"),
-					anchor("games/delete/".$acc_id, "Delete", array('onclick'=>"
-						if ( confirm('Are you sure to delete game \'$acc_id\' ? All associated data (attendances, scorers, matches) will be LOST!') ) { return true;}return false;")),
-					$time[$key],
-					$stadium_name[$key],
-					($attendances[$key]>0?($attendances[$key]>1?$attendances[$key]." people":"Only 1 person"):"nobody")
-				);
+			foreach ($transactions as $key->$value){
+				
 			}
-			echo $this->table->generate();
-	}else { ?>
-		Games table is empty
-	<?php }?>
+
+			break;
+
+		case "payment" :
+			echo "payment goes here";
+			break;
+
+		case "income" :
+			echo "income goes here";
+			break;
+
+		case "outcome" :
+			echo "outcome goes here";
+			break;
+
+		default://shows the balance by default
+			echo ($balance>=0?($balance == 0 ? "You have nothing now. But be grateful" :
+					"Get rich or die trying bro, you have $$balance :)"):("You owe someone $".abs($balance)). ". Declare bankruptcy?");
+			break;
+	}
+	?>
 	</body>
 </html>

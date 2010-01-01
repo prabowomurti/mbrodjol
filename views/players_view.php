@@ -13,8 +13,7 @@
 				'table_open'  => '<table class="widefat" border="1px" margin="1px">',
 				'table_close' => '</table>',
 				'heading_row_start' => '<thead>',
-				'heading_row_end' => '</thead>',
-
+				'heading_row_end' => '</thead>'
 			);
 			$this->table->set_heading(array('Edit', 'Delete', 'Fullname', 'Nickname', 'Birthday'));
 			$this->table->set_template($table_template);

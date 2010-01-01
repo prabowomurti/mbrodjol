@@ -1,0 +1,54 @@
+#~#~#~#~#~#~#~#~#
+     READ ME
+#~#~#~#~#~#~#~#~#
+___________________
+0. What is Mbrodjol?
+
+Mbrodjol is a simple web application developed with Code Igniter,
+to manage your futsal team's stories.
+
+You can
+	Manage Games
+	Manage Matches
+	Manage Players
+	View Top Scorers
+	Manage Places/Stadium
+	Balance
+		View Details
+		Player Pays
+		Add Income
+		Spent Money
+
+
+_______________
+1. Requirements
+
+You need 
+	[] Code Igniter newest version (>=1.7.2), visit
+	   www.codeigniter.com
+	[] Web server installed (Apache prefered)
+	[] Web browser (other than IE)
+	[] MySQL running properly, with an empty database
+
+
+_______________
+2. Installation
+
+	a. Install Code Igniter, make sure everything runs well
+	b. Create an empty database, configure it as always on 
+	c. Copy all files in views/ and controllers/ to your views/
+	   controllers/
+	d. Open your web browser and visit the welcome controller, 
+	   e.g http://localhost/welcome
+	e. Enjoy
+
+__________
+3. License
+
+Mbrodjol licensed under GPL v.2. Please read LICENSE.txt
+
+_______
+4. More
+
+More information is provided on www.github.com/sangprabo/mbrodjol or
+contact me by email prabowo.murti AT gmail.com
