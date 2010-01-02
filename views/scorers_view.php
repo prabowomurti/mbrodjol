@@ -6,7 +6,7 @@
 		<?=anchor("", "Home");?> | <?=anchor("players", "To Players")?><br />
 		<strong>List of scorers</strong><br />
 		<?php
-		if (empty($sorers)){
+		if (empty($scorers)){
 			echo "No scorer yet. Just make goals first :)";
 		}else {
 			foreach ($scorers as $scorer):?>
