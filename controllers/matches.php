@@ -37,7 +37,7 @@ WHERE game_id = ".$game_id;
 		if ($this->db->query($sql_all)->num_rows() == 0)
 			$this->db->query("INSERT INTO matches(game_id) VALUES ($game_id)");
 
-		
+		//what the fuck, this code is a mesh... Going to sleep!
 		$data["query1"] = $this->db->query($sql_all);
 
 		
