@@ -8,62 +8,62 @@ class Outcomes extends Controller {
 
 	function index() {
 		$data = array();
-		$query_get_incomes = $this->db->query("
+		$query_get_outcomes = $this->db->query("
 SELECT *
-FROM incomes
-ORDER BY income_date
+FROM outcomes
+ORDER BY outcome_date
 ");
-		foreach ($query_get_incomes->result() as $row) {
-			$data["incomes"][] = $row->income_id;
-			$data["source"][] = $row->source;
-			$data["income_amount"][] = $row->income_amount;
-			$data["income_date"][] = $row->income_date;
+		foreach ($query_get_outcomes->result() as $row) {
+			$data["outcomes"][] = $row->outcome_id;
+			$data["spent_for"][] = $row->spent_for;
+			$data["outcome_amount"][] = $row->outcome_amount;
+			$data["outcome_date"][] = $row->outcome_date;
 		}
-		$this->load->view('incomes_view', $data);
+		$this->load->view('outcomes_view', $data);
 	}
 
 	function add() {
-		$this->load->view('incomes_add_view');
+		$this->load->view('outcomes_add_view');
 	}
 
 	function edit() {
-		$query_get_income = $this->db->query("
-SELECT * FROM incomes
-WHERE income_id = ".$this->uri->segment(3)."
+		$query_get_outcome = $this->db->query("
+SELECT * FROM outcomes
+WHERE outcome_id = ".$this->uri->segment(3)."
 ");
-		$row = $query_get_income->row();
-			$data["income_id"] = $row->income_id;
-			$data["source"] = $row->source;
-			$data["income_amount"] = $row->income_amount;
-			$data["income_date"] = $row->income_date;
+		$row = $query_get_outcome->row();
+			$data["outcome_id"] = $row->outcome_id;
+			$data["spent_for"] = $row->spent_for;
+			$data["outcome_amount"] = $row->outcome_amount;
+			$data["outcome_date"] = $row->outcome_date;
 
-		$this->load->view('incomes_add_view', $data);
+		$this->load->view('outcomes_add_view', $data);
 	}
 
 	function do_save() {
 		extract ($_POST);
 
 		if (!isset($save)){
-			$this->db->insert("incomes", $_POST);
-			redirect("incomes/add/success");
+			$this->db->insert("outcomes", $_POST);
+			redirect("outcomes/add/success");
 		}elseif ($save == "Update"){
 			$this->db->query("
-UPDATE incomes
-SET source = '$source', income_amount = '$income_amount', income_date = '$income_date'
-WHERE income_id = $income_id
+UPDATE outcomes
+SET spent_for = '$spent_for', outcome_amount = '$outcome_amount', outcome_date = '$outcome_date'
+WHERE outcome_id = $outcome_id
 ");
-			redirect("incomes/edit/$income_id");
+			redirect("outcomes/edit/$outcome_id");
 
 		}
 	}
 
 	function delete() {
-		$income_id = $this->uri->segment(3);
+		$outcome_id = $this->uri->segment(3);
 		$this->db->query("
-DELETE FROM incomes
-WHERE income_id = $income_id");
+DELETE FROM outcomes
+WHERE outcome_id = $outcome_id");
 
-		redirect("incomes");
+		redirect("outcomes");
 	}
 }
 ?>
