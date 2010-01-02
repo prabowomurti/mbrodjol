@@ -18,6 +18,12 @@ FROM (games NATURAL JOIN matches NATURAL JOIN places) LEFT JOIN opponents
 	}
 
 	function edit() {
+
+		//you can not add match without an opponent
+		$data["query2"] = $this->db->get("opponents");
+		if ($this->db->get("opponents")->num_rows() == 0)
+			redirect ("opponents/add/noopponent");
+
 		$game_id = $this->uri->segment(3);
 		if (empty($game_id)){
 			redirect ("matches");
@@ -26,9 +32,15 @@ FROM (games NATURAL JOIN matches NATURAL JOIN places) LEFT JOIN opponents
 SELECT game_id, opponent_id, game_note, our_goals, their_goals
 FROM games NATURAL JOIN matches NATURAL JOIN places
 WHERE game_id = ".$game_id;
+
+		//add a match if it doesn't exist
+		if ($this->db->query($sql_all)->num_rows() == 0)
+			$this->db->query("INSERT INTO matches(game_id) VALUES ($game_id)");
+
+		
 		$data["query1"] = $this->db->query($sql_all);
 
-		$data["query2"] = $this->db->get("opponents");
+		
 
 		$sql_scorers = "
 SELECT players.player_id as player_id, players.nickname AS nick, total_goals
@@ -64,6 +76,22 @@ WHERE game_id = ".$game_id."
 ";
 		$this->db->query($sql_update_matches);
 		redirect ("matches/edit/".$game_id);
+	}
+
+	function delete() {
+		$match_id = $this->uri->segment(3);
+		$this->db->query("
+DELETE FROM matches
+WHERE game_id = $match_id
+		");
+
+		//there is no match, there is no scorer
+		$this->db->query("
+DELETE FROM scorers
+WHERE game_id = $match_id
+		");
+
+		redirect ("matches");
 	}
 
 
