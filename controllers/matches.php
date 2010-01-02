@@ -71,6 +71,7 @@ AND game_id = ".$game_id."
 UPDATE matches SET
 opponent_id = ".$opponent_id.",
 our_goals = ".$our_goals.",
+their_goals = $their_goals,
 game_note = '".$game_note."'
 WHERE game_id = ".$game_id."
 ";
