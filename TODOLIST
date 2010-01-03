@@ -5,5 +5,6 @@
 0. style.css
 1. Optimize tables
 2. Optimize queries
-3. Attendances
+3. Attendances (how many times each player attends games/matches)
 4. Total account for each player
+5. Search all payment by a player, within particular time
