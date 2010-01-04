@@ -4,7 +4,7 @@
 		<style type="text/css"><?php $this->load->view('styles/general-style.css')?></style>
 	</head>
 	<body>
-		<?=anchor("", "Home")?> | <?=anchor("players/add", "Add New Player")?><br />
+		<?=anchor("", "Home")?> | <?=anchor("players", "To Players")?> | <?=anchor("players/add", "Add New Player")?> | <?=anchor("players/attendances", "Show Player Attendances")?><br />
 		<?php
 		if (!isset($players)){
 			echo "Players table is empty";

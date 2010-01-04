@@ -78,7 +78,21 @@ WHERE player_id = $player_id");
 		redirect ("players");
 
 	}
-	
+
+	function attendances() {
+		$query_show_get_players_attendances = $this->db->query("
+SELECT nickname, count(game_id) AS times_played
+FROM players NATURAL JOIN attendances
+GROUP BY nickname
+ORDER BY times_played DESC
+		");
+		foreach ($query_show_get_players_attendances->result() as $row){
+			$data["players"][] = $row->nickname;
+			$data["times_played"][] = $row->times_played;
+		}
+		$this->load->view('players_attendances_view', isset($data)?$data:array());
+
+	}
 
 }
 ?>
