@@ -7,4 +7,4 @@
 	<?=anchor("", "Home")?> |
 	<?=anchor("accounts", "Resume")?> |
 	<?=anchor('accounts/history', "View Details")?> | <?=anchor("accounts/payment", "All Payments")?> |
-	<?=anchor("accounts/add", "Player Pays")?><br />
+	<?=anchor("accounts/add", "Player Pays")?> | <?=anchor("accounts/search", "Search Payment")?><br />
