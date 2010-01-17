@@ -25,6 +25,7 @@
 			$this->table->set_template($table_template);
 			$this->table->set_heading(array('Edit', 'Delete', 'Time', 'From', 'Amount', 'Note'));
 
+			$total_amount = 0;
 			foreach ($accounts as $key=>$account_id){
 				$this->table->add_row(
 					anchor("accounts/edit/".$account_id, "Edit"),
@@ -35,9 +36,12 @@
 					$account_amount[$key],
 					$account_note[$key]
 				);
+				//echo total account_amount
+				$total_amount += $account_amount[$key];
 			}
 
 			echo $this->table->generate();
+			echo "Total amount : $total_amount";
 		}
 ?>
 <?php endif;?>
