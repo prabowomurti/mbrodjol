@@ -15,11 +15,16 @@ foreach ($query1->result() as $rows1):
 ?>
 	Versus : <?=form_dropdown('opponent_id', $opponents, $rows1->opponent_id)?><br />
 	Scorers : <br /><?php
+	$total_goals_made_by_players = 0;
 	foreach ($query3->result() as $rows3){
 		echo $rows3->nick." : ";
 		echo form_input("players[".$rows3->player_id."]", $rows3->total_goals);
+		$total_goals_made_by_players += $rows3->total_goals;
 		echo "<br />";
 	}
+	//in case there is an own goal
+	echo "Own goal(s) : ".form_input("own_goal", $rows1->our_goals-$total_goals_made_by_players);
+	echo "<br />";
 	echo anchor("scorers/match/".$this->uri->segment(3), "Edit scorers in this game");
 ?><br />
 	Our goals : <?=$rows1->our_goals?><br />

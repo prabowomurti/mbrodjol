@@ -66,6 +66,9 @@ AND game_id = ".$game_id."
 			}
 		}
 
+		//in case there is an own goal
+		$our_goals += $own_goal;
+
 		
 		$sql_update_matches = "
 UPDATE matches SET
