@@ -65,9 +65,9 @@ if ($this->db->query('SHOW TABLES')->num_rows() < 10) {?>
 <?php }else {?>
 	<code class="menu"><?=anchor("games", "Manage Games");?></code>
 		<code class="menu child"><?=anchor("games/add", "Add New Game");?></code>
-	<code class="menu"><?=anchor("matches", "Manage Matches");?></code>
 	<code class="menu"><?=anchor("players", "Manage Players");?></code>
-		<code class="menu child"><?=anchor("players/add", "Add New Player");?></code>
+	<code class="menu"><?=anchor("matches", "Manage Matches");?></code>
+	<code class="menu"><?=anchor("opponents", "Manage Opponents");?></code>
 	<code class="menu"><?=anchor("scorers", "View Top Scorers");?></code>
 	<code class="menu"><?=anchor("places", "Manage Places/Stadium");?></code>
 		<code class="menu child"><?=anchor("places/add", "Add New Place");?></code>
