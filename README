@@ -11,6 +11,7 @@ You can
 	Manage Games
 	Manage Matches
 	Manage Players
+	Manage Opponents
 	View Top Scorers
 	Manage Places/Stadium
 	Balance
@@ -29,17 +30,59 @@ You need
 	[] Web browser (other than IE)
 	[] MySQL running properly, with an empty database
 
-
 _______________
 2. Installation
 
 	a. Install Code Igniter, make sure everything runs well
-	b. Create an empty database, configure it as always on 
-	c. Copy all files in views/ and controllers/ to your views/
+	b. Create an empty database in MySQL, configure
+	   system/application/config/database.php so it fits with
+	   your database settings (username, password, db_name, etc
+	c. You will get
 	   controllers/
-	d. Open your web browser and visit the welcome controller, 
-	   e.g http://localhost/welcome
-	e. Enjoy
+	   	accounts.php
+	   	games.php
+		incomes.php
+		index.html
+		matches.php
+		opponents.php
+		outcomes.php
+		places.php
+		players.php
+		scorers.php
+		welcome.php
+	   views/
+		accounts_add_view.php
+		accounts_search_view.php
+		accounts_view_header.php
+		accounts_view.php
+		games_add_view.php
+		games_edit_view.php
+		games_view.php
+		incomes_add_view.php
+                incomes_view.php
+                index.html
+                matches_edit_view.php
+                matches_view.php
+                opponents_add_view.php
+                opponents_view.php
+                outcomes_add_view.php
+                outcomes_view.php
+                places_add_view.php
+                places_view.php
+                players_add_view.php
+                players_attendances_view.php
+                players_edit_view.php
+                players_view.php
+                scorers_match_view.php
+                scorers_view.php
+                styles (directory)
+                welcome_message.php
+	   Copy all files in the controllers to _your_ controllers
+	   and all files in the views folder to your views
+	d. Open your web browser and visit the welcome controller,
+	   e.g http://localhost/ (if you install CodeIgniter in root
+	   folder as usual)
+	e. Click "Install Application", and enjoy..
 
 __________
 3. License
