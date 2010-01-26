@@ -11,7 +11,8 @@ class Matches extends Controller {
 		$sql = "
 SELECT game_id, `time`, stadium_name, team_name
 FROM (games NATURAL JOIN matches NATURAL JOIN places) LEFT JOIN opponents
-	ON matches.opponent_id = opponents.opponent_id";
+	ON matches.opponent_id = opponents.opponent_id
+ORDER BY `time`";
 		$data["query_show_all_matches"] = $this->db->query($sql);
 		
 		$this->load->view('matches_view', $data);
