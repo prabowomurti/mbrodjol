@@ -167,20 +167,42 @@ ORDER BY nickname
 		extract($_POST);
 		$account_note = mysql_escape_string($account_note);
 
-		$query_search_result = $this->db->query("
+		if (!empty($groupByNick)){
+			$query_search_result = $this->db->query("
+	SELECT nickname, SUM(amount) as total_amount
+	FROM accounts NATURAL JOIN players
+	WHERE ".
+	($player_id != '0'?"player_id = $player_id AND ":"").
+	"account_note like '%$account_note%'
+	GROUP BY player_id, nickname
+	ORDER BY total_amount DESC;
+			");
+			foreach ($query_search_result->result() as $row){
+				$data['accounts'][] = $row->nickname;//just make sure it's not empty (what a silly way)
+				$data['account_nickname'][] = $row->nickname;
+				$data['account_total_amount'][] = $row->total_amount;
+			}
+			$data["groupByNick"] = "yes";
+		}else {
+			$query_search_result = $this->db->query("
 SELECT account_id, nickname, amount, time, account_note
 FROM accounts NATURAL JOIN players ".
 ($player_id != '0'?"WHERE player_id = $player_id AND ":"WHERE ").
 "account_note like '%$account_note%'
 ORDER BY time
-		");
-		foreach ($query_search_result->result() as $row){
-			$data['accounts'][] = $row->account_id;
-			$data['account_nickname'][] = $row->nickname;
-			$data['account_amount'][] = $row->amount;
-			$data['account_time'][] = $row->time;
-			$data['account_note'][] = $row->account_note;
+			");
+		
+			foreach ($query_search_result->result() as $row){
+				$data['accounts'][] = $row->account_id;
+				$data['account_nickname'][] = $row->nickname;
+				$data['account_amount'][] = $row->amount;
+				$data['account_time'][] = $row->time;
+				$data['account_note'][] = $row->account_note;
+			}
+			$data["groupByNick"] = "";
 		}
+
+		
 
 		$this->load->view('accounts_search_view', isset($data)?$data: array());
 	}

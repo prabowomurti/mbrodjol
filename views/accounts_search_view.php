@@ -8,21 +8,24 @@
 		?>
 		Player <?=form_dropdown('player_id', $players, '0')?><br />
 		Account note <?=form_input('account_note')?><br />
+		<label><?=form_checkbox('groupByNick', 'yes', false)."Group by player's nick?"?></label><br />
 		<?=form_submit('submit', 'Search')?>
 		<?=form_close()?>
-<?php endif;?>
+<?php endif;//search index?>
 <?php if ($this->uri->segment(2) == "do_search")://show search result?>
 <?php
+		$table_template = array (
+					'table_open'  => '<table class="widefat" border="1px">',
+					'table_close' => '</table>',
+					'heading_row_start' => '<thead>',
+					'heading_row_end' => '</thead>'
+		);
+		$this->table->set_template($table_template);
+		
 		if (!isset($accounts)){
 			echo "Empty result";
-		}else {
-			$table_template = array (
-						'table_open'  => '<table class="widefat" border="1px">',
-						'table_close' => '</table>',
-						'heading_row_start' => '<thead>',
-						'heading_row_end' => '</thead>'
-			);
-			$this->table->set_template($table_template);
+		}elseif (empty($groupByNick)) {
+			
 			$this->table->set_heading(array('Edit', 'Delete', 'Time', 'From', 'Amount', 'Note'));
 
 			$total_amount = 0;
@@ -42,8 +45,23 @@
 
 			echo $this->table->generate();
 			echo "Total amount : $total_amount";
+		}else {//if user wants to group by nickname
+			$this->table->set_heading(array('Nickname', 'Total Amount'));
+
+			$total_amount = 0;
+			foreach ($accounts as $key=>$account_id){
+				$this->table->add_row(
+					$account_nickname[$key],
+					$account_total_amount[$key]
+				);
+				//echo total account_amount
+				$total_amount += $account_total_amount[$key];
+			}
+
+			echo $this->table->generate();
+			echo "Total amount : $total_amount";
 		}
 ?>
-<?php endif;?>
+<?php endif;//search result?>
     </body>
 </html>

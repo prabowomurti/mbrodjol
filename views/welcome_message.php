@@ -6,7 +6,7 @@
 
 body {
  background-color: #fff;
- margin: 40px;
+ margin: 10px 40px 40px 40px;
  font-family: "Lucida Grande", Verdana, Sans-serif;
  font-size: 14px;
  color: #4F5155;
@@ -18,7 +18,7 @@ h1 {
  border-bottom: 1px solid #D0D0D0;
  font-size: 16px;
  font-weight: bold;
- margin: 24px 0 2px 0;
+ margin: 2px 0 2px 0;
  padding: 5px 0 6px 0;
 }
 
@@ -56,11 +56,10 @@ h1 {
 
 <p><?=anchor("http://github.com/sangprabo/mbrodjol", "Mbrodjol")?> is a simple web application developed with <a href="http://codeigniter.com">Code Igniter</a>, to manage your futsal team's stories.</p>
 
-<p>You can:</p>
 <?php
 //this lines check whether the application
 //has already installed or not (11 == num of tables needed)
-if ($this->db->query('SHOW TABLES')->num_rows() < 10) {?>
+if ($this->db->query('SHOW TABLES')->num_rows() < 11) {?>
 	<code class="menu"><?=anchor("welcome/install", "Install Application");?></code>
 <?php }else {?>
 	<code class="menu"><?=anchor("games", "Manage Games");?></code>
@@ -69,6 +68,7 @@ if ($this->db->query('SHOW TABLES')->num_rows() < 10) {?>
 	<code class="menu"><?=anchor("matches", "Manage Matches");?></code>
 	<code class="menu"><?=anchor("opponents", "Manage Opponents");?></code>
 	<code class="menu"><?=anchor("scorers", "View Top Scorers");?></code>
+	<code class="menu"><?=anchor("assistants", "View Top Assists");?></code>
 	<code class="menu"><?=anchor("places", "Manage Places/Stadium");?></code>
 		<code class="menu child"><?=anchor("places/add", "Add New Place");?></code>
 	<code class="menu"><?=anchor("accounts", "Balance");?></code>

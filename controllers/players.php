@@ -72,8 +72,13 @@ DELETE FROM scorers
 WHERE player_id = $player_id");
 
 		$this->db->query("
+DELETE FROM assistants
+WHERE player_id = $player_id");
+
+		$this->db->query("
 DELETE FROM accounts
 WHERE player_id = $player_id");
+
 
 		redirect ("players");
 

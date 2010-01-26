@@ -8,13 +8,22 @@ class Matches extends Controller {
 	}
 
 	function index() {
-		$sql = "
-SELECT game_id, `time`, stadium_name, team_name
+		$query_get_all_matches = $this->db->query("
+SELECT game_id, `time`, stadium_name, team_name, our_goals, their_goals
 FROM (games NATURAL JOIN matches NATURAL JOIN places) LEFT JOIN opponents
 	ON matches.opponent_id = opponents.opponent_id
-ORDER BY `time`";
-		$data["query_show_all_matches"] = $this->db->query($sql);
-		
+ORDER BY `time`"
+		);
+
+		foreach ($query_get_all_matches->result() as $row){
+			$data["game_ids"][] = $row->game_id;
+			$data["time"][] = $row->time;
+			$data["stadium_name"][] = $row->stadium_name;
+			$data["team_name"][] = $row->team_name;
+			$data["our_goals"][] = $row->our_goals;
+			$data["their_goals"][] = $row->their_goals;
+		}
+
 		$this->load->view('matches_view', $data);
 	}
 
@@ -48,18 +57,37 @@ SELECT players.player_id as player_id, players.nickname AS nick, total_goals
 FROM players NATURAL JOIN scorers
 WHERE game_id = ".$game_id;
 		$data["query3"] = $this->db->query($sql_scorers);
+
+		$sql_assistants = "
+SELECT players.player_id as player_id, players.nickname AS nick, total_assists
+FROM players NATURAL JOIN assistants
+WHERE game_id = ".$game_id;
+		$data["query4"] = $this->db->query($sql_assistants);
+
 	    $this->load->view('matches_edit_view', $data);
 	}
 
 	function update () {
+		
 		extract($_POST);
-
+		//impossible: total_assists > total_goals
+		settype($assistants, 'array');
+		settype($scorers, 'array');
+		if (array_sum($assistants) > array_sum($scorers)){
+			echo "Total assists is more than total goals. ";
+			echo anchor('matches/edit/'.$game_id, 'Back');
+			exit();
+		}
+		
+		/**
+		 * UPDATE table scorers
+		 */
 		$our_goals = 0;
-		if (isset($players)){
-			foreach ($players as $player_id=>$goals){
+		if (isset($scorers)){
+			foreach ($scorers as $player_id=>$goals){
 				$this->db->query("
 UPDATE scorers SET
-total_goals = ".$goals."
+total_goals = ".(isset($goals)?$goals:"0")."
 WHERE player_id = ".$player_id."
 AND game_id = ".$game_id."
 ");
@@ -68,19 +96,35 @@ AND game_id = ".$game_id."
 		}
 
 		//in case there is an own goal
-		$our_goals += $own_goal;
+		$our_goals += (!empty($own_goal)?$own_goal:0);
 
+		/**
+		 * UPDATE table assistats
+		 */
+		if (isset($assistants)){
+			foreach ($assistants as $player_id=>$total_assists){
+				$this->db->query("
+UPDATE assistants SET
+total_assists = ".(isset($total_assists)?$total_assists:"0")."
+WHERE player_id = ".$player_id."
+AND game_id = ".$game_id.";
+				");
+			}
+		}
 		
+		/**
+		 * UPDATE table matches
+		 */
 		$sql_update_matches = "
 UPDATE matches SET
 opponent_id = ".$opponent_id.",
-our_goals = ".$our_goals.",
-their_goals = $their_goals,
+our_goals = ".(isset($our_goals)?$our_goals:"0").",
+their_goals = ".(!empty($their_goals)?$their_goals:"0").",
 game_note = '".$game_note."'
 WHERE game_id = ".$game_id."
 ";
 		$this->db->query($sql_update_matches);
-		redirect ("matches/edit/".$game_id);
+		redirect ("matches/edit/".$game_id."/updated");
 	}
 
 	function delete() {

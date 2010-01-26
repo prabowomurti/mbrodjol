@@ -36,6 +36,16 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 )
 ");
 
+		//ASSISTANTS
+		$this->db->query("
+CREATE TABLE `assistants` (
+  `player_id` int(11) NOT NULL,
+  `game_id` int(11) NOT NULL,
+  `total_assists` tinyint(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`player_id`,`game_id`)
+)
+		");
+
 		//GAMES
 		$this->db->query("
 CREATE TABLE IF NOT EXISTS `games` (
@@ -138,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `scorers` (
 	function uninstall() {
 		$this->db->query("
 DROP TABLE
-accounts, attendances, games, incomes, matches, opponents, outcomes, places, players, scorers;
+accounts, attendances, assistants, games, incomes, matches, opponents, outcomes, places, players, scorers;
 "
 		);
 		echo "Never regret what you've done in life | ";

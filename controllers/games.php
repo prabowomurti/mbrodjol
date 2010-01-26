@@ -82,6 +82,19 @@ DELETE
 FROM attendances
 WHERE player_id = ".$dp_id.
 " AND game_id = ".$data["game_id"].";");
+
+			//if a player doesn't come, it means he can not scoring or gives assist
+			$this->db->query("
+DELETE
+FROM scorers
+WHERE player_id = ".$dp_id.
+" AND game_id = ".$data["game_id"].";");
+			$this->db->query("
+DELETE
+FROM assistants
+WHERE player_id = ".$dp_id.
+" AND game_id = ".$data["game_id"].";");
+
 		}
 
 		redirect("games/edit/".$data["game_id"]);
@@ -134,20 +147,26 @@ VALUES ($player_id, ". $last_insert_game_id.")
 
 	function delete() {
 		$game_id = $this->uri->segment(3);
-		$this->db->query("
-DELETE FROM games
-WHERE game_id = $game_id;
-");
+		
 		$this->db->query("
 DELETE FROM matches
 WHERE game_id = $game_id;
 ");
+		$this->db->query("
+DELETE FROM games
+WHERE game_id = $game_id;
+		");
+	
 		$this->db->query("
 DELETE FROM attendances
 WHERE game_id = $game_id;
 ");
 		$this->db->query("
 DELETE FROM scorers
+WHERE game_id = $game_id;
+");
+		$this->db->query("
+DELETE FROM assistants
 WHERE game_id = $game_id;
 ");
 		redirect("games");

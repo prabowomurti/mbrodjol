@@ -4,7 +4,7 @@ textarea, input, select {
 	border-style: solid;
 	border-width: 1px;
 	border-color: #DFDFDF;
-	font-size: 12px;
+	font-size: 13px;
 	margin: 1px;
 	padding: 3px;
 	
@@ -17,5 +17,5 @@ textarea {
 
 body {
 	font-family: "Lucida Grande", Verdana, Sans-serif;
-	font-size: 14px;
+	font-size: 15px;
 }

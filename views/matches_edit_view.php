@@ -18,7 +18,7 @@ foreach ($query1->result() as $rows1):
 	$total_goals_made_by_players = 0;
 	foreach ($query3->result() as $rows3){
 		echo $rows3->nick." : ";
-		echo form_input("players[".$rows3->player_id."]", $rows3->total_goals);
+		echo form_input("scorers[".$rows3->player_id."]", $rows3->total_goals);
 		$total_goals_made_by_players += $rows3->total_goals;
 		echo "<br />";
 	}
@@ -29,6 +29,16 @@ foreach ($query1->result() as $rows1):
 ?><br />
 	Our goals : <?=$rows1->our_goals?><br />
 	Opponent's goals : <?=form_input("their_goals", $rows1->their_goals)?><br />
+	<br />
+	Assistants : <br /><?php
+	foreach ($query4->result() as $rows4){
+		echo $rows4->nick." : ";
+		echo form_input("assistants[".$rows4->player_id."]", $rows4->total_assists);
+		echo "<br />";
+	}
+	//in case there is an own goal
+	echo anchor("assistants/match/".$this->uri->segment(3), "Edit assistants in this game");
+	?><br />
 	Notes<br />
 	<?=form_textarea("game_note", $rows1->game_note)?><br />
 <?=form_submit("save", "Save Changes")?>
